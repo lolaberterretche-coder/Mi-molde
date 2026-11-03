@@ -14,7 +14,7 @@ Mi Molde se desarrolla como **aplicación final**, con entregas progresivas en l
 
 ## Interfaz
 - Trasladar fielmente el diseño aprobado en Figma.
-- Incorporar instrucciones de medición y mensajes de validación más específicos.
+- Se incorporaron instrucciones de medición y validaciones iniciales; revisar con especialistas y mejorar ilustraciones y accesibilidad.
 - Ampliar accesibilidad y pruebas en dispositivos.
 
 **Antes de cortar tela:** imprimir, verificar la escala y controlar las medidas del patrón. No presentar la geometría actual como validada.
