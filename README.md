@@ -61,3 +61,7 @@ No requiere variables de entorno, servidor, base de datos ni API. Los enlaces in
 ## Importante: precisión de moldería
 
 Aunque el producto se desarrolla como plataforma final, **la geometría todavía no está validada para cortar tela**. Hay curvas aproximadas, no se aplica margen de costura y la impresión requiere prueba física. Revisá el apunte y las piezas impresas antes de cortar.
+
+## Publicación continua
+
+Cada actualización de la rama `main` puede iniciar un despliegue en Vercel si el proyecto está vinculado a este repositorio y la integración de GitHub está habilitada. La publicación efectiva se comprueba en **Vercel → Deployments**; un commit exitoso en GitHub por sí solo no confirma que el sitio esté publicado.
