@@ -1,0 +1,6 @@
+<!doctype html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mi Molde | Prototipo</title><link rel="stylesheet" href="css/styles.css"></head>
+<body><header><h1>Mi Molde <span>💜</span></h1><p>Tu corpiño base personalizado · prototipo experimental</p></header>
+<main><section class="panel"><h2>Ingresá tus medidas</h2><p>Completá las nueve medidas en centímetros.</p><form id="measurements"><div id="fields" class="fields"></div><label class="option"><input id="allowance" type="checkbox"> Quiero 1 cm de margen de costura (próxima versión)</label><button type="submit">Generar molde</button></form><p id="error" role="alert"></p></section>
+<section class="panel result" id="result" hidden><h2>Vista previa del molde</h2><p class="warning">Patrón experimental. Comprobá las medidas sobre papel antes de cortar tela.</p><div id="summary"></div><div id="preview"></div><button id="print" type="button">Imprimir mosaico A4</button></section></main>
+<footer>Mi Molde · versión de prueba · las medidas se procesan en tu navegador</footer><script type="module" src="js/app.js"></script></body></html>
