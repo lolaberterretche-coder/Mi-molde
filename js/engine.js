@@ -16,7 +16,18 @@ export function generate(m){
  const equal=Math.max(dist(J,L0),dist(J,M0)),L=move(J,L0,equal),M=move(J,M0,equal);
  const a1=Math.atan2(L.y-J.y,L.x-J.x),a2=Math.atan2(M.y-J.y,M.x-J.x),angle=a1-a2;
  const I=p(F.x,m.backLength+d),closedI=rot(I,J,angle);
+ // Con la pinza cerrada, el nuevo lateral es la recta G -> I rotado.
+ // Intersectamos esa recta con el rayo J -> L, y deshacemos la rotación
+ // en el tramo inferior para conservar la pinza abierta en el archivo.
+ const cross=(u,v)=>u.x*v.y-u.y*v.x;
+ const sub=(u,v)=>p(u.x-v.x,u.y-v.y);
+ const v=sub(closedI,G),w=sub(L,J),den=cross(v,w);
+ if(Math.abs(den)<1e-9)throw Error('No se puede rectificar este lateral: geometría degenerada.');
+ const s=cross(sub(J,G),w)/den;
+ const r=cross(sub(J,G),v)/den;
+ if(s<=0||s>=1||r<=0)throw Error('La rectificación lateral no es válida para estas medidas.');
+ const trueUpper=p(G.x+s*v.x,G.y+s*v.y),trueLower=rot(trueUpper,J,-angle);
  const dartX=F.x/2,back={B,C,G,F,hip:p(hw,hipY),waistY:m.backLength,dartX};
- const front={A,FC,G,J,K,L,M,I,hip:p(hw,hipY+d),waistY:m.backLength+d,dartX:apexX};
- return {m,d,back,front,angle,closedI,backSeam:dist(G,F),frontSeam:dist(G,closedI),difference:dist(G,closedI)-dist(G,F),equalLeg:equal};
+ const front={A,FC,G,J,K,L,M,I,trueUpper,trueLower,hip:p(hw,hipY+d),waistY:m.backLength+d,dartX:apexX};
+ return {m,d,back,front,angle,closedI,backSeam:dist(G,F),frontSeam:dist(G,closedI),difference:dist(G,closedI)-dist(G,F),equalLeg:equal,truedLeg:dist(J,trueUpper),truingExtension:dist(L,trueUpper)};
 }
