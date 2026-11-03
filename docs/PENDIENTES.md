@@ -1,20 +1,26 @@
-# Mi Molde — trabajo técnico pendiente
+# Mi Molde — pendientes técnicos
 
-Mi Molde se desarrolla como **aplicación final**, con entregas progresivas en la misma base de código.
+La plataforma está organizada como producto final, con despliegue estático en Vercel y persistencia local, sin base de datos.
 
-## Moldería
-- Cotejar las construcciones y curvas del escote, sisa y cadera con el apunte de la cátedra.
-- Validar físicamente la rectificación del lateral con pinza cerrada y la igualdad de costuras.
-- Implementar margen de costura de 1 cm opcional, excluyendo dobleces y pinzas.
-- Verificar todas las medidas y las categorías de la tabla de busto.
+## Implementado en el código
+- Navegación por Inicio, Mis proyectos, Mis medidas y Crear molde.
+- Gestión local de proyectos y perfiles, guardado, edición, eliminación y migración de medidas anteriores.
+- Respaldo JSON exportable/importable, con confirmación antes de reemplazar datos.
+- Generación SVG, impresión A4 y validaciones iniciales.
+- Pruebas unitarias y flujo de GitHub Actions (pendiente de verificar ejecución).
 
-## Impresión
-- Probar el mosaico A4 al 100 % en impresoras reales.
-- Perfeccionar las marcas de montaje y revisar el cuadrado de calibración de 5 × 5 cm.
+## Validación de moldería pendiente
+- Cotejar curvas del escote, sisa y cadera con el apunte original.
+- Validar físicamente la rectificación lateral y la igualdad de costuras.
+- Incorporar margen de costura opcional de 1 cm, sin aplicarlo en dobleces ni pinzas.
+- Revisar la tabla de pinzas y casos extremos con pruebas físicas.
+- Probar escala y unión del mosaico A4 en impresoras reales.
 
-## Interfaz
-- Trasladar fielmente el diseño aprobado en Figma.
-- Se incorporaron instrucciones de medición y validaciones iniciales; revisar con especialistas y mejorar ilustraciones y accesibilidad.
-- Ampliar accesibilidad y pruebas en dispositivos.
+## Experiencia y despliegue
+- Ajustar visualmente la interfaz a las pantallas aprobadas en Figma.
+- Realizar pruebas de accesibilidad, dispositivos y navegadores.
+- Confirmar que Vercel sirva correctamente la aplicación.
+- Validar que las pruebas automáticas pasen en GitHub Actions.
+- Agregar estados vacíos más ricos, confirmaciones no bloqueantes y guía ilustrada de medidas.
 
-**Antes de cortar tela:** imprimir, verificar la escala y controlar las medidas del patrón. No presentar la geometría actual como validada.
+**Antes de cortar tela:** imprimir al 100 %, medir el cuadrado de control y verificar físicamente el molde.
