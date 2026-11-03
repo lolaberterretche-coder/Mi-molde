@@ -1,0 +1,6 @@
+import {definitions,generate} from './engine.js';import {draw,printTiles} from './render.js';
+const form=document.querySelector('#measurements'),fields=document.querySelector('#fields'),error=document.querySelector('#error'),result=document.querySelector('#result'),preview=document.querySelector('#preview'),summary=document.querySelector('#summary');
+fields.innerHTML=definitions.map(([key,label,value])=>`<label class="field" for="${key}">${label}<input id="${key}" name="${key}" type="number" min="1" step=".1" value="${value}" required></label>`).join('');
+let model;
+form.addEventListener('submit',e=>{e.preventDefault();error.textContent='';try{const m=Object.fromEntries(definitions.map(([key])=>[key,Number(form.elements[key].value)]));model=generate(m);preview.innerHTML=draw(model);summary.textContent=`Pinza lateral: ${model.d} cm · patas iguales: ${model.equalLeg.toFixed(2)} cm · diferencia lateral aproximada: ${(model.difference*10).toFixed(1)} mm.`;result.hidden=false;result.scrollIntoView({behavior:'smooth'});}catch(err){error.textContent=err.message;result.hidden=true;}});
+document.querySelector('#print').addEventListener('click',()=>{if(!model)return;if(document.querySelector('#allowance').checked)alert('Esta versión todavía NO agrega margen de costura.');try{printTiles(model)}catch(e){error.textContent=e.message}});
