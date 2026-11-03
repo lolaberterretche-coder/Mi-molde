@@ -22,7 +22,7 @@ Las pruebas utilizan el ejecutor integrado de Node.js. No requieren instalar paq
 
 ## Funciones disponibles
 
-- Formulario de nueve medidas y recuperación local de los últimos valores utilizados.
+- Formulario de nueve medidas con instrucciones, validaciones de proporciones y recuperación local de valores.\n- Exportación e importación de perfiles de medidas en JSON (sin enviar datos a servidores).
 - Construcción geométrica delantera y trasera.
 - Igualación de patas de pinza, cierre temporal y primera rectificación geométrica.
 - Vista previa vectorial SVG y descarga del archivo.
