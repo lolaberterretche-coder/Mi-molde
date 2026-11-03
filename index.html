@@ -1,6 +1,12 @@
 <!doctype html>
-<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mi Molde | Prototipo</title><link rel="stylesheet" href="css/styles.css"></head>
-<body><header><h1>Mi Molde <span>💜</span></h1><p>Tu corpiño base personalizado · prototipo experimental</p></header>
-<main><section class="panel"><h2>Ingresá tus medidas</h2><p>Completá las nueve medidas en centímetros.</p><form id="measurements"><div id="fields" class="fields"></div><label class="option"><input id="allowance" type="checkbox"> Quiero 1 cm de margen de costura (próxima versión)</label><button type="submit">Generar molde</button></form><p id="error" role="alert"></p></section>
-<section class="panel result" id="result" hidden><h2>Vista previa del molde</h2><p class="warning">Patrón experimental. Comprobá las medidas sobre papel antes de cortar tela.</p><div id="summary"></div><div id="preview"></div><button id="print" type="button">Imprimir mosaico A4</button></section></main>
-<footer>Mi Molde · versión de prueba · las medidas se procesan en tu navegador</footer><script type="module" src="js/app.js"></script></body></html>
+<html lang="es">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#70449b"><meta name="description" content="Mi Molde: creá moldes de costura personalizados a partir de tus medidas."><title>Mi Molde | Moldes a tu medida</title><link rel="stylesheet" href="css/styles.css"></head>
+<body>
+<a class="skip" href="#main">Ir al contenido</a>
+<header><div class="brand"><span aria-hidden="true">✂</span> Mi Molde <span aria-hidden="true">💜</span></div><p>Diseñá tu corpiño base a partir de tus medidas</p></header>
+<main id="main">
+<section class="panel"><div class="eyebrow">PASO 1 · TUS MEDIDAS</div><h1>Creá tu molde</h1><p>Ingresá las nueve medidas de tu cuerpo, en centímetros. Podés corregirlas cuando quieras.</p>
+<form id="measurements"><div id="fields" class="fields"></div><div class="actions"><button type="submit">Generar mi molde</button><button type="button" id="reset" class="secondary">Restablecer medidas</button></div></form><p id="error" role="alert" aria-live="polite"></p></section>
+<section class="panel result" id="result" hidden><div class="eyebrow">PASO 2 · TU MOLDE</div><h2>Delantero y espalda</h2><p class="warning">Antes de cortar tela, imprimí al 100 %, medí el cuadrado de control y verificá el molde sobre papel.</p><p id="summary" aria-live="polite"></p><div id="preview"></div><div class="actions"><button id="print" type="button">Imprimir en A4</button><button id="download" type="button" class="secondary">Descargar SVG</button></div></section>
+</main><footer>Mi Molde · Tus medidas se procesan en tu navegador. No se envían a un servidor.</footer>
+<script type="module" src="js/app.js"></script></body></html>
