@@ -14,6 +14,6 @@ Abrí `index.html` en un navegador moderno. Si los módulos JavaScript se bloque
 - `docs/PENDIENTES.md`: limitaciones y tareas futuras.
 
 ## Estado
-**Prototipo experimental.** El motor iguala las patas de la pinza y calcula su cierre temporal, pero todavía no implementa completamente el corte rectificado. Las sisas y escotes son aproximaciones. La impresión A4 requiere calibración y prueba real. La opción de margen de costura todavía no se aplica. No utilizar para cortar tela sin verificar físicamente el molde.
+**Prototipo experimental.** El motor iguala las patas, cierra temporalmente la pinza, rectifica geométricamente el costado y vuelve a abrirla. Es una aproximación sin validación física. Las sisas y escotes son aproximaciones. La impresión A4 tiene mosaico dinámico y hoja de calibración de 5 × 5 cm, pero requiere prueba real. La opción de margen de costura todavía no se aplica. No utilizar para cortar tela sin verificar físicamente el molde.
 
 Primera versión cargada directamente en GitHub.
