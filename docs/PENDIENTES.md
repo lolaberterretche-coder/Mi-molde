@@ -1,11 +1,20 @@
-# Pendientes del prototipo
+# Mi Molde — trabajo técnico pendiente
 
-- Validar el trazado contra el apunte académico original y probar físicamente el molde.
-- Reemplazar las aproximaciones Bézier de escote y sisa por construcciones verificadas.
-- Se implementó una primera rectificación geométrica del lateral: cierre temporal, intersección con recta axila-cintura y reapertura. Falta cotejarla con el apunte y una prueba física.
-- Agregar margen de costura real de 1 cm, excluyendo dobleces y pinzas.
-- El mosaico A4 ahora calcula hojas según tamaño físico y tiene hoja independiente de calibración 5 × 5 cm. Falta comprobar escala con impresora real y perfeccionar marcas de unión.
-- Conectar la interfaz con las pantallas y estilos de Figma.
-- Probar más medidas y casos extremos.
+Mi Molde se desarrolla como **aplicación final**, con entregas progresivas en la misma base de código.
 
-**Advertencia:** no cortar tela sin medir y verificar el patrón impreso. El código es una demostración funcional, no un molde validado.
+## Moldería
+- Cotejar las construcciones y curvas del escote, sisa y cadera con el apunte de la cátedra.
+- Validar físicamente la rectificación del lateral con pinza cerrada y la igualdad de costuras.
+- Implementar margen de costura de 1 cm opcional, excluyendo dobleces y pinzas.
+- Verificar todas las medidas y las categorías de la tabla de busto.
+
+## Impresión
+- Probar el mosaico A4 al 100 % en impresoras reales.
+- Perfeccionar las marcas de montaje y revisar el cuadrado de calibración de 5 × 5 cm.
+
+## Interfaz
+- Trasladar fielmente el diseño aprobado en Figma.
+- Incorporar instrucciones de medición y mensajes de validación más específicos.
+- Ampliar accesibilidad y pruebas en dispositivos.
+
+**Antes de cortar tela:** imprimir, verificar la escala y controlar las medidas del patrón. No presentar la geometría actual como validada.
