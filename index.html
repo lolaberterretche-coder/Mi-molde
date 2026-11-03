@@ -1,12 +1,61 @@
 <!doctype html>
 <html lang="es">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#70449b"><meta name="description" content="Mi Molde: creá moldes de costura personalizados a partir de tus medidas."><title>Mi Molde | Moldes a tu medida</title><link rel="stylesheet" href="css/styles.css"></head>
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#70449b">
+<meta name="description" content="Creá, guardá y descargá tus moldes de costura personalizados con Mi Molde.">
+<title>Mi Molde | Tu espacio de moldería</title>
+<link rel="stylesheet" href="/css/styles.css">
+</head>
 <body>
 <a class="skip" href="#main">Ir al contenido</a>
-<header><div class="brand"><span aria-hidden="true">✂</span> Mi Molde <span aria-hidden="true">💜</span></div><p>Diseñá tu corpiño base a partir de tus medidas</p></header>
-<main id="main">
-<section class="panel"><div class="eyebrow">PASO 1 · TUS MEDIDAS</div><h1>Creá tu molde</h1><p>Ingresá las nueve medidas de tu cuerpo, en centímetros. Podés corregirlas cuando quieras.</p>
-<form id="measurements"><div id="fields" class="fields"></div><div class="actions"><button type="submit">Generar mi molde</button><button type="button" id="reset" class="secondary">Restablecer medidas</button></div><div class="profile-actions"><button type="button" id="export-measures" class="secondary">Guardar perfil de medidas</button><label class="import-button" for="import-measures">Cargar perfil guardado</label><input id="import-measures" type="file" accept=".json,application/json" aria-label="Cargar perfil de medidas JSON"></div></form><p id="error" role="alert" aria-live="polite"></p></section>
-<section class="panel result" id="result" hidden><div class="eyebrow">PASO 2 · TU MOLDE</div><h2>Delantero y espalda</h2><p class="warning">Antes de cortar tela, imprimí al 100 %, medí el cuadrado de control y verificá el molde sobre papel.</p><p id="summary" aria-live="polite"></p><div id="preview"></div><div class="actions"><button id="print" type="button">Imprimir en A4</button><button id="download" type="button" class="secondary">Descargar SVG</button></div></section>
-</main><footer>Mi Molde · Tus medidas se procesan en tu navegador. No se envían a un servidor.</footer>
-<script type="module" src="js/app.js"></script></body></html>
+<div class="shell">
+<aside class="sidebar" aria-label="Navegación principal">
+ <a class="brand" href="#inicio" aria-label="Mi Molde, inicio"><span aria-hidden="true">✂</span> Mi Molde <span aria-hidden="true">💜</span></a>
+ <p class="sidebar-caption">Tu espacio de moldería</p>
+ <nav class="nav">
+  <a href="#inicio" data-route="inicio"><span aria-hidden="true">⌂</span> Inicio</a>
+  <a href="#proyectos" data-route="proyectos"><span aria-hidden="true">▤</span> Mis proyectos</a>
+  <a href="#medidas" data-route="medidas"><span aria-hidden="true">⌁</span> Mis medidas</a>
+  <a href="#crear" data-route="crear"><span aria-hidden="true">＋</span> Crear molde</a>
+ </nav>
+ <div class="sidebar-note"><strong>Guardado en tu dispositivo</strong><p>Los proyectos y las medidas quedan en este navegador. Exportá un respaldo para no perderlos.</p><button id="backup-export" class="text-button" type="button">Descargar respaldo</button><label for="backup-import" class="text-button upload">Importar respaldo</label><input id="backup-import" type="file" accept=".json,application/json"></div>
+</aside>
+<div class="main-area">
+<header class="topbar"><span>Mi Molde / <span id="breadcrumb">Inicio</span></span><span class="privacy"><span aria-hidden="true">●</span> Sin cuenta · datos locales</span></header>
+<main id="main" tabindex="-1">
+<section id="view-inicio" class="view">
+ <div class="hero"><span class="eyebrow">BIENVENIDA A TU ESPACIO</span><h1>Tu próxima creación empieza acá.</h1><p>Organizá tus medidas, diseñá moldes personalizados y preparalos para imprimir desde un solo lugar.</p><button id="start-create" type="button">Crear nuevo molde</button></div>
+ <div class="stats"><article><span>Proyectos guardados</span><strong id="count-projects">0</strong></article><article><span>Perfiles de medidas</span><strong id="count-profiles">0</strong></article><article><span>Tipo de molde</span><strong>Corpiño base</strong></article></div>
+ <div class="section-heading"><h2>Proyectos recientes</h2><a href="#proyectos">Ver todos</a></div><div id="recent-projects" class="cards"></div>
+</section>
+<section id="view-proyectos" class="view" hidden>
+ <div class="section-heading"><div><span class="eyebrow">TU TALLER</span><h1>Mis proyectos</h1><p>Retomá y editá tus moldes cuando quieras.</p></div><button id="projects-create" type="button">Nuevo molde</button></div>
+ <div id="projects-list" class="cards"></div>
+</section>
+<section id="view-medidas" class="view" hidden>
+ <div class="section-heading"><div><span class="eyebrow">TUS DATOS</span><h1>Mis medidas</h1><p>Guardá distintos perfiles para reutilizarlos al crear moldes.</p></div><button id="profiles-create" type="button">Nuevo perfil</button></div>
+ <div id="profiles-list" class="cards"></div>
+</section>
+<section id="view-crear" class="view" hidden>
+ <div class="section-heading"><div><span class="eyebrow">CREADOR DE MOLDES</span><h1 id="editor-heading">Crear corpiño base</h1><p>Completá tus medidas en centímetros y generá las piezas.</p></div></div>
+ <div class="editor-grid">
+  <section class="panel">
+   <form id="measurements">
+    <label class="field wide" for="project-name">Nombre del proyecto<input id="project-name" name="projectName" maxlength="70" value="Mi corpiño base" required></label>
+    <div class="profile-row"><label for="profile-select">Usar un perfil guardado</label><select id="profile-select"><option value="">Medidas actuales</option></select></div>
+    <div id="fields" class="fields"></div>
+    <div class="actions"><button type="submit">Generar molde</button><button type="button" id="save-project" class="secondary">Guardar proyecto</button><button type="button" id="save-profile" class="secondary">Guardar estas medidas</button></div>
+   </form>
+   <p id="error" class="error" role="alert" aria-live="polite"></p>
+  </section>
+  <section class="panel result" id="result" hidden><span class="eyebrow">VISTA PREVIA</span><h2>Delantero y espalda</h2><p class="warning">Antes de cortar tela, imprimí al 100 %, medí el cuadrado de control y verificá las piezas sobre papel.</p><p id="summary" aria-live="polite"></p><div id="preview"></div><div class="actions"><button id="print" type="button">Imprimir en A4</button><button id="download" type="button" class="secondary">Descargar SVG</button></div></section>
+  <section class="panel empty-preview" id="preview-empty"><div class="empty-icon" aria-hidden="true">✂</div><h2>Tu molde aparecerá acá</h2><p>Ingresá tus medidas y presioná «Generar molde» para ver el resultado.</p></section>
+ </div>
+</section>
+</main>
+<footer>Mi Molde · Plataforma de moldería · Guardado local, sin base de datos.</footer>
+</div></div>
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<script type="module" src="/js/app.js"></script>
+</body></html>
