@@ -37,3 +37,16 @@
 
 /* Portada: misma lámina ilustrativa que la pantalla de visualización */
 .home-art{overflow:hidden;min-width:0}.home-art .art-inner{min-width:0;padding:20px 16px 16px}.home-pattern{width:100%;min-width:0}.home-pattern svg{display:block;width:100%;height:auto;max-height:430px;object-fit:contain}.home-pattern .piece{fill:#f5eafb}.home-art .art-inner small{margin-top:8px}:root[data-theme="dark"] .home-pattern .piece{fill:#49325b}
+
+/* Portada: títulos externos, alineados y sin leyenda debajo de los moldes */
+.home-pattern-headings{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:center;text-align:center;margin:0 0 10px}
+.home-pattern-headings strong{font-size:clamp(.78rem,1.2vw,1rem);font-weight:750;letter-spacing:.07em;color:#573476}
+.home-pattern svg .label,.home-pattern svg .note{display:none}
+.home-pattern svg{max-height:400px}
+:root[data-theme="dark"] .home-pattern-headings strong{color:#e5c4f2}
+/* El menú Mi taller comparte el logo de la cabecera, también en modo oscuro */
+.sidebar .workshop-logo{display:flex;align-items:center;justify-content:center;padding:0 0 8px;min-height:88px}
+.sidebar .workshop-logo img{display:block;width:185px;height:88px;max-width:100%;object-fit:contain}
+.sidebar .workshop-logo .logo-dark{display:none}
+:root[data-theme="dark"] .sidebar .workshop-logo .logo-light{display:none}
+:root[data-theme="dark"] .sidebar .workshop-logo .logo-dark{display:block}
