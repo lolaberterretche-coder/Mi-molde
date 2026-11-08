@@ -18,6 +18,8 @@ function renderGuide(){
  $('#guide-counter').textContent=`${count} de 9 medidas completadas`;
  $('#guide-step-label').textContent=`MEDIDA ${String(guideIndex+1).padStart(2,'0')} / 09`;
  $('#guide-title').textContent=step.title;
+ $('#guide-image').src=step.image;
+ $('#guide-image').alt='Fotografía original de Figma: '+step.title.toLowerCase();
  $('#guide-instruction').textContent=step.instruction;
  $('#guide-tip').textContent=step.tip;
  $('#guide-progress').setAttribute('aria-valuenow',String(count));
