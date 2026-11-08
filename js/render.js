@@ -1,29 +1,56 @@
-// Visualización experimental. Unidades de dibujo: centímetros reales.
-const f=n=>Number(n).toFixed(3),P=q=>f(q.x)+','+f(q.y);
-export function dimensions(model){
- const {back:b,front:a}=model;
- const pieceWidth=Math.max(b.hip.x,b.G.x,a.hip.x,a.G.x)+12;
- return {shift:pieceWidth+10,width:pieceWidth*2+13,height:Math.max(b.hip.y,a.hip.y)+16};
+// Representación didáctica basada en las láminas de "Corpiño base 2 pinzas".
+// NO es un patrón personalizado ni está trazado a escala. Los centímetros no
+// se aplican a este SVG. El motor de cálculos se conserva por separado.
+export function dimensions(){
+ return {shift:390,width:760,height:700};
 }
-export function draw(model){
- const {back:b,front:a,m}=model,{shift,width,height}=dimensions(model);
- const backPath=`M0 0 Q2 -1 ${P(b.B)} L${P(b.C)} Q${f(b.G.x-4)} ${f(b.G.y-8)} ${P(b.G)} L${P(b.F)} Q${f(b.hip.x+1)} ${f((b.F.y+b.hip.y)/2)} ${P(b.hip)} L0 ${f(b.hip.y)} Z`;
- const frontPath=`M0 ${f(a.A.y+m.neck/6+2)} Q1 ${f(a.A.y+2)} ${P(a.A)} L${P(a.FC)} Q${f(a.G.x-5)} ${f(a.G.y-8)} ${P(a.G)} L${P(a.trueUpper)} L${P(a.J)} L${P(a.trueLower)} L${P(a.I)} Q${f(a.hip.x+1)} ${f((a.I.y+a.hip.y)/2)} ${P(a.hip)} L0 ${f(a.hip.y)} Z`;
- const dart=(x,y,w)=>`<path class="dart" d="M${f(x-w/2)} ${f(y)} L${f(x)} ${f(y-13)} L${f(x+w/2)} ${f(y)} L${f(x)} ${f(y+12)} Z"/>`;
- return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-3 -8 ${width} ${height}" width="${width}cm" height="${height}cm" aria-label="Molde experimental: delantero y espalda"><style>.piece{fill:#f4e9fb;stroke:#70449b;stroke-width:.15}.dart{fill:none;stroke:#ab6dc0;stroke-width:.13;stroke-dasharray:.6 .4}.label{font:2.2px sans-serif;fill:#4c2c69}</style><g><path class="piece" d="${backPath}"/>${dart(b.dartX,b.waistY,(m.bust/4-m.waist/4)/2)}<text class="label" x="2" y="8">ESPALDA</text></g><g transform="translate(${shift} 0)"><path class="piece" d="${frontPath}"/>${dart(a.dartX,a.waistY,(m.bust/4-m.waist/4)/2)}<text class="label" x="2" y="13">DELANTERO</text></g></svg>`;
+export function draw(){
+ return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 700" role="img" aria-label="Esquema ilustrativo del corpiño base de dos pinzas, sin escala real" preserveAspectRatio="xMidYMid meet">
+ <style>
+ .piece{fill:#f5eafb;stroke:#70449b;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+ .dart{fill:none;stroke:#a56abf;stroke-width:2;stroke-dasharray:7 5;stroke-linejoin:round}
+ .label{font:20px system-ui,sans-serif;fill:#573476;font-weight:650;letter-spacing:1px}
+ .note{font:13px system-ui,sans-serif;fill:#755c88}
+ .reference{stroke:#b9a0c8;stroke-width:1.1;stroke-dasharray:5 6;fill:none}
+ </style>
+ <!-- Espalda: escote poco profundo, hombro inclinado, sisa de curvatura continua -->
+ <g transform="translate(35 32)">
+  <path class="piece" d="M 0 48
+    C 27 48, 47 43, 62 27
+    L 170 60
+    L 168 150
+    C 166 187, 174 222, 226 239
+    L 211 414
+    C 224 457, 247 508, 236 588
+    L 0 588 Z"/>
+  <path class="dart" d="M 104 258 L 90 413 L 104 512 L 118 413 Z"/>
+  <path class="reference" d="M 0 239 L 226 239 M 0 413 L 211 413"/>
+  <text class="label" x="35" y="102">ESPALDA</text>
+ </g>
+ <!-- Delantero: escote más profundo, sisa entallada y pinza de busto lateral -->
+ <g transform="translate(405 32)">
+  <path class="piece" d="M 0 105
+    C 30 105, 49 98, 55 49
+    L 162 79
+    L 151 149
+    C 143 195, 160 220, 225 239
+    L 216 284
+    L 130 315
+    L 217 344
+    L 204 423
+    C 220 468, 245 522, 236 588
+    L 0 588 Z"/>
+  <path class="dart" d="M 112 270 L 98 423 L 112 521 L 126 423 Z"/>
+  <path class="reference" d="M 0 239 L 225 239 M 0 423 L 204 423"/>
+  <text class="label" x="29" y="145">DELANTERO</text>
+ </g>
+ <text class="note" x="380" y="672" text-anchor="middle">Esquema ilustrativo basado en el paso a paso de corpiño base 2 pinzas · Sin escala real</text>
+ </svg>`;
 }
-export function printTiles(model){
- // Mosaico de escala 1:1. Imprimir al 100%, sin ajustar al papel.
- // La vista SVG usa centímetros físicos y cada hoja muestra un recorte de 19 × 27,7 cm.
- const {width,height}=dimensions(model),W=19,H=27.7;
- const cols=Math.ceil(width/W),rows=Math.ceil(height/H),total=cols*rows,markup=draw(model);
- const pages=Array.from({length:total},(_,i)=>{
-  const x=i%cols,y=Math.floor(i/cols);
-  return `<section class="page"><div class="tile" style="left:${-x*W}cm;top:${-y*H}cm">${markup}</div><div class="tag">Mi Molde · ${i+1}/${total} · fila ${y+1}, columna ${x+1}</div><span class="corner top-left">+</span><span class="corner bottom-right">+</span></section>`;
- }).join('');
- // La hoja de control separada evita tapar piezas con el cuadrado de calibración.
- const calibration=`<section class="page calibration-page"><h1>Control de escala · Mi Molde</h1><p>Imprimí al 100% o tamaño real. Desactivá «ajustar a página».</p><div class="square"></div><p>El cuadrado debe medir exactamente 5 × 5 cm con una regla.</p><p>Las hojas del patrón se unen por fila y columna, sin superponer sus áreas útiles.</p></section>`;
- const win=window.open('','_blank');if(!win)throw Error('Permití las ventanas emergentes para imprimir.');
- win.document.write(`<!doctype html><html lang="es"><head><meta charset="UTF-8"><title>Mi Molde · mosaico A4 experimental</title><style>@page{size:A4 portrait;margin:10mm}*{box-sizing:border-box}html,body{margin:0;padding:0}.page{width:19cm;height:27.7cm;overflow:hidden;break-after:page;position:relative}.tile{position:absolute;width:${width}cm;height:${height}cm}.tile svg{display:block;width:${width}cm!important;height:${height}cm!important;max-width:none!important}.tag{position:absolute;z-index:2;top:0;left:0;background:white;font:10px sans-serif;padding:1mm}.corner{position:absolute;font:12px monospace;color:#444}.top-left{left:0;top:4mm}.bottom-right{right:0;bottom:0}.calibration-page{padding:2cm 1cm;font:14px sans-serif}.calibration-page h1{font-size:20px}.square{width:5cm;height:5cm;border:1px solid black;margin:2cm 0}@media screen{body{background:#eee}.page{background:white;margin:20px auto;box-shadow:0 1px 6px #999}}</style></head><body>${calibration}${pages}</body></html>`);
+export function printTiles(){
+ // Para la entrega académica se imprime la lámina ilustrativa, no un mosaico 1:1.
+ const win=window.open('','_blank');
+ if(!win)throw Error('Permití las ventanas emergentes para imprimir.');
+ win.document.write(`<!doctype html><html lang="es"><head><meta charset="UTF-8"><title>Mi Molde · lámina ilustrativa</title><style>@page{size:A4 landscape;margin:12mm}body{font:15px system-ui,sans-serif;color:#4c2c69}h1{font-size:20px}svg{display:block;width:100%;height:auto;max-height:170mm}p{font-size:12px}</style></head><body><h1>Mi Molde · Corpiño base de dos pinzas</h1><p>Representación didáctica inspirada en los apuntes de trazado. No es un molde a escala real ni apto para cortar tela.</p>${draw()}</body></html>`);
  win.document.close();win.focus();setTimeout(()=>win.print(),500);
 }
