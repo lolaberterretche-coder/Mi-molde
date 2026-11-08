@@ -48,7 +48,7 @@ function setValues(m){for(const [key] of definitions)form.elements[key].value=m[
 function validValues(){const m=values(),errors=validateMeasurements(m);if(errors.length)throw Error(errors.join(' '));return normalizeMeasures(m)}
 function resetPreview(){model=null;result.hidden=true;$('#preview-empty').hidden=false;error.textContent=''}
 function editorNew(){editingProjectId=null;editingProfileId=null;$('#project-name').value='Mi corpiño base';setValues(defaultMeasures());profileSelect.value='';$('#editor-heading').textContent='Crear corpiño base';resetPreview()}
-function go(route){const allowed=['inicio','como-funciona','preparacion','ayuda','proyectos','medidas','crear'];const page=allowed.includes(route)?route:'inicio';for(const id of allowed)$('#view-'+id).hidden=id!==page;for(const a of document.querySelectorAll('[data-route]')){const active=a.dataset.route===page;a.classList.toggle('active',active);if(active)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')}$('#breadcrumb').textContent={inicio:'Inicio','como-funciona':'Cómo funciona',preparacion:'Preparación',ayuda:'Ayuda',proyectos:'Mis proyectos',medidas:'Mis medidas',crear:'Crear molde'}[page];window.scrollTo({top:0,behavior:'instant'})}
+function go(route){const allowed=['inicio','como-funciona','preparacion','ayuda','proyectos','medidas','crear','revision','generacion','visualizacion','exportacion'];const page=allowed.includes(route)?route:'inicio';for(const id of allowed)$('#view-'+id).hidden=id!==page;for(const a of document.querySelectorAll('[data-route]')){const active=a.dataset.route===page;a.classList.toggle('active',active);if(active)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')}$('#breadcrumb').textContent={inicio:'Inicio','como-funciona':'Cómo funciona',preparacion:'Preparación',ayuda:'Ayuda',proyectos:'Mis proyectos',medidas:'Mis medidas',crear:'Crear molde',revision:'Revisión',generacion:'Generación',visualizacion:'Visualización',exportacion:'Exportación'}[page];window.scrollTo({top:0,behavior:'instant'})}
 function route(){go(location.hash.replace('#',''))}
 window.addEventListener('hashchange',route);
 
@@ -137,6 +137,54 @@ document.querySelectorAll('#workspace-menu a').forEach(a=>a.addEventListener('cl
  $('#workspace-menu').classList.remove('is-open');
  $('#workspace-toggle').setAttribute('aria-expanded','false');
 }));
+function navigateFlow(page){location.hash=page;go(page)}
+function renderReview(){
+ $('#review-measures').innerHTML=definitions.map(([key,label])=>`<tr><td>${escapeHtml(label)}</td><td>${escapeHtml(form.elements[key].value||'—')} cm</td><td><button type="button" class="text-button" data-review-edit="${key}">Editar</button></td></tr>`).join('');
+}
+$('#go-review').addEventListener('click',()=>{
+ try{validValues();error.textContent='';renderReview();navigateFlow('revision')}
+ catch(e){error.textContent=e.message;notify(e.message)}
+});
+$('#review-measures').addEventListener('click',event=>{
+ const key=event.target.closest('[data-review-edit]')?.dataset.reviewEdit;
+ if(!key)return;
+ const i=measurementGuide.findIndex(step=>step.key===key);
+ if(i>=0)selectGuide(i);
+ showEditor();form.elements[key].focus();
+});
+$('#review-back').addEventListener('click',showEditor);
+$('#review-generate').addEventListener('click',()=>{
+ generatePattern();
+ if(!model){notify(error.textContent||'No se pudo generar el molde.');return}
+ $('#generation-status').textContent='Molde generado con las medidas revisadas. Ya podés visualizar las piezas.';
+ navigateFlow('generacion');
+});
+$('#generation-back').addEventListener('click',()=>{renderReview();navigateFlow('revision')});
+$('#generation-view').addEventListener('click',()=>{
+ if(!model){notify('Primero generá el molde desde la revisión.');return}
+ $('#visual-pattern').innerHTML=draw(model);setZoom(100);navigateFlow('visualizacion');
+});
+let zoom=100;
+function setZoom(value){
+ zoom=Math.max(50,Math.min(200,value));
+ $('#zoom-value').textContent=zoom+' %';
+ $('#zoom-value-side').textContent=zoom+' %';
+ const svg=$('#visual-pattern svg');if(svg){svg.style.width=zoom+'%';svg.style.maxWidth='none';svg.style.height='auto'}
+}
+$('#zoom-in').addEventListener('click',()=>setZoom(zoom+25));
+$('#zoom-out').addEventListener('click',()=>setZoom(zoom-25));
+$('#visual-back').addEventListener('click',showEditor);
+$('#visual-export').addEventListener('click',()=>navigateFlow('exportacion'));
+$('#export-back').addEventListener('click',()=>navigateFlow('visualizacion'));
+document.querySelectorAll('input[name="export-format"]').forEach(el=>el.addEventListener('change',()=>{
+ $('#export-action').textContent=el.value==='svg'?'Descargar SVG →':'Imprimir molde →';
+}));
+$('#export-action').addEventListener('click',()=>{
+ if(!model){notify('Primero generá el molde.');return}
+ const format=document.querySelector('input[name="export-format"]:checked').value;
+ if(format==='svg')downloadText('mi-molde-corpino-base.svg',draw(model),'image/svg+xml;charset=utf-8');
+ else try{printTiles(model)}catch(e){notify(e.message)}
+});
 const themeKey='mi-molde:tema';
 function applyTheme(mode){
  const dark=mode==='dark';
