@@ -129,6 +129,14 @@ $('#backup-import').addEventListener('change',async event=>{
   persist(incoming);editorNew();notify('Respaldo importado correctamente.');
  }catch(e){notify('No se pudo importar el respaldo: '+e.message)}
 });
+$('#workspace-toggle').addEventListener('click',()=>{
+ const menu=$('#workspace-menu'),open=menu.classList.toggle('is-open');
+ $('#workspace-toggle').setAttribute('aria-expanded',String(open));
+});
+document.querySelectorAll('#workspace-menu a').forEach(a=>a.addEventListener('click',()=>{
+ $('#workspace-menu').classList.remove('is-open');
+ $('#workspace-toggle').setAttribute('aria-expanded','false');
+}));
 const themeKey='mi-molde:tema';
 function applyTheme(mode){
  const dark=mode==='dark';
