@@ -50,3 +50,40 @@
 .sidebar .workshop-logo .logo-dark{display:none}
 :root[data-theme="dark"] .sidebar .workshop-logo .logo-light{display:none}
 :root[data-theme="dark"] .sidebar .workshop-logo .logo-dark{display:block}
+
+/* Firma visual Mi Molde: cinta métrica lavanda con marcas de medición.
+   Detalle decorativo original, sin interferir con los contenidos. */
+:root{--tape-bg:#e6c6f0;--tape-ink:#74469a;--tape-border:#c498d7}
+:root[data-theme="dark"]{--tape-bg:#78518f;--tape-ink:#f5e6fa;--tape-border:#b98ccc}
+.figma-home .home-copy{position:relative}
+.figma-home .home-copy h1{position:relative;isolation:isolate}
+.figma-home .home-copy h1::after{
+ content:"";display:block;width:min(255px,75%);height:23px;margin:18px 0 0 3px;
+ border:1px solid var(--tape-border);border-radius:4px 14px 14px 4px;
+ background:
+  repeating-linear-gradient(90deg,var(--tape-ink) 0 1px,transparent 1px 12px) left 4px / 100% 7px no-repeat,
+  repeating-linear-gradient(90deg,var(--tape-ink) 0 1px,transparent 1px 24px) left 4px / 100% 13px no-repeat,
+  var(--tape-bg);
+ transform:rotate(-3deg);transform-origin:left center;
+ box-shadow:3px 4px 0 #71418e18;
+}
+.figma-home .home-copy h1::before{
+ content:"";position:absolute;right:2%;top:-38px;width:72px;height:44px;
+ border:9px solid var(--tape-bg);border-left-color:transparent;border-bottom-color:var(--tape-border);
+ border-radius:50%;transform:rotate(-30deg);opacity:.7;pointer-events:none;
+}
+.home-steps article{position:relative;overflow:hidden}
+.home-steps article::after{
+ content:"";position:absolute;right:0;bottom:0;width:65px;height:16px;
+ border-top:1px solid var(--tape-border);border-radius:5px 0 0 0;
+ background:repeating-linear-gradient(90deg,var(--tape-ink) 0 1px,transparent 1px 9px) 0 3px / 100% 6px no-repeat,var(--tape-bg);
+ opacity:.65;transform:rotate(-9deg) translate(5px,4px);pointer-events:none;
+}
+.figma-page>h1::after{
+ content:"";display:block;width:100px;height:9px;margin-top:15px;
+ border-radius:2px 8px 8px 2px;
+ background:repeating-linear-gradient(90deg,var(--tape-ink) 0 1px,transparent 1px 9px) 0 1px / 100% 5px no-repeat,var(--tape-bg);
+ transform:rotate(-2deg);opacity:.85;
+}
+@media(max-width:580px){.figma-home .home-copy h1::before{display:none}.figma-home .home-copy h1::after{width:180px;height:19px}}
+@media(prefers-reduced-motion:reduce){.figma-home .home-copy h1::after,.home-steps article::after{transform:none}}
