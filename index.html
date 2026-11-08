@@ -44,7 +44,23 @@
    <form id="measurements">
     <label class="field wide" for="project-name">Nombre del proyecto<input id="project-name" name="projectName" maxlength="70" value="Mi corpiño base" required></label>
     <div class="profile-row"><label for="profile-select">Usar un perfil guardado</label><select id="profile-select"><option value="">Medidas actuales</option></select></div>
-    <div id="fields" class="fields"></div>
+    <div class="measure-guide" aria-label="Guía de toma de medidas">
+     <div class="guide-top"><span class="eyebrow">PASO 2 DE 7 · TOMA DE MEDIDAS</span><span id="guide-counter" aria-live="polite">1 de 9</span></div>
+     <h2>Tus medidas, a tu ritmo</h2>
+     <p>Elegí una medida para ver cómo tomarla. Podés completar los campos en cualquier orden.</p>
+     <div class="guide-progress" role="progressbar" aria-label="Medidas completadas" aria-valuemin="0" aria-valuemax="9" aria-valuenow="0" id="guide-progress"><span id="guide-progress-fill"></span></div>
+     <div class="guide-layout">
+      <article class="guide-detail" aria-live="polite">
+       <span id="guide-step-label" class="eyebrow">MEDIDA 01 / 09</span>
+       <h3 id="guide-title">Contorno de busto</h3>
+       <p id="guide-instruction"></p>
+       <div class="guide-visual" id="guide-visual"><span aria-hidden="true">✂</span><p>Ilustración de esta medida pendiente de incorporar desde el material de clase.</p></div>
+       <p class="guide-tip" id="guide-tip"></p>
+       <div class="guide-controls"><button type="button" class="secondary" id="guide-prev">← Anterior</button><button type="button" id="guide-next">Siguiente →</button></div>
+      </article>
+      <div class="guide-fields"><h3>Ingresá tus medidas</h3><p>Todos los valores se expresan en centímetros (cm).</p><div id="fields" class="fields"></div></div>
+     </div>
+    </div>
     <div class="actions"><button type="submit">Generar molde</button><button type="button" id="save-project" class="secondary">Guardar proyecto</button><button type="button" id="save-profile" class="secondary">Guardar estas medidas</button></div>
    </form>
    <p id="error" class="error" role="alert" aria-live="polite"></p>
