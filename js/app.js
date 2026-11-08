@@ -7,6 +7,8 @@ import {defaultMeasures,loadWorkspace,saveWorkspace,saveProfile,saveProject,dele
 const $=selector=>document.querySelector(selector);
 const fields=$('#fields'),form=$('#measurements'),error=$('#error'),result=$('#result');
 const preview=$('#preview'),summary=$('#summary'),profileSelect=$('#profile-select');
+// La portada reutiliza exactamente el mismo SVG ilustrativo que la visualización.
+$('#home-pattern').innerHTML=draw();
 const escapeHtml=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const formatDate=value=>{const date=new Date(value);return Number.isNaN(date.getTime())?'Fecha desconocida':date.toLocaleDateString('es-AR',{day:'2-digit',month:'short',year:'numeric'})};
 let workspace,model=null,editingProjectId=null,editingProfileId=null,guideIndex=0;
