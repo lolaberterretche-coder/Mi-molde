@@ -48,7 +48,7 @@ function setValues(m){for(const [key] of definitions)form.elements[key].value=m[
 function validValues(){const m=values(),errors=validateMeasurements(m);if(errors.length)throw Error(errors.join(' '));return normalizeMeasures(m)}
 function resetPreview(){model=null;result.hidden=true;$('#preview-empty').hidden=false;error.textContent=''}
 function editorNew(){editingProjectId=null;editingProfileId=null;$('#project-name').value='Mi corpiño base';setValues(defaultMeasures());profileSelect.value='';$('#editor-heading').textContent='Crear corpiño base';resetPreview()}
-function go(route){const allowed=['inicio','proyectos','medidas','crear'];const page=allowed.includes(route)?route:'inicio';for(const id of allowed)$('#view-'+id).hidden=id!==page;for(const a of document.querySelectorAll('[data-route]')){const active=a.dataset.route===page;a.classList.toggle('active',active);if(active)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')}$('#breadcrumb').textContent={inicio:'Inicio',proyectos:'Mis proyectos',medidas:'Mis medidas',crear:'Crear molde'}[page];window.scrollTo({top:0,behavior:'instant'})}
+function go(route){const allowed=['inicio','como-funciona','preparacion','ayuda','proyectos','medidas','crear'];const page=allowed.includes(route)?route:'inicio';for(const id of allowed)$('#view-'+id).hidden=id!==page;for(const a of document.querySelectorAll('[data-route]')){const active=a.dataset.route===page;a.classList.toggle('active',active);if(active)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')}$('#breadcrumb').textContent={inicio:'Inicio','como-funciona':'Cómo funciona',preparacion:'Preparación',ayuda:'Ayuda',proyectos:'Mis proyectos',medidas:'Mis medidas',crear:'Crear molde'}[page];window.scrollTo({top:0,behavior:'instant'})}
 function route(){go(location.hash.replace('#',''))}
 window.addEventListener('hashchange',route);
 
@@ -97,6 +97,9 @@ function downloadText(name,content,type){
 document.addEventListener('click',event=>{
  const button=event.target.closest('[data-action]');if(!button)return;
  const {action,id}=button.dataset;
+ if(action==='begin-flow'){editorNew();location.hash='preparacion';go('preparacion')}
+ if(action==='go-home'){location.hash='inicio';go('inicio')}
+ if(action==='go-measurements'){showEditor()}
  if(action==='open-project')openProject(id);
  if(action==='open-profile')openProfile(id);
  if(action==='delete-project'||action==='delete-profile'){
@@ -106,7 +109,7 @@ document.addEventListener('click',event=>{
   try{persist(deleteItem(workspace,type,id));if(type==='projects'&&editingProjectId===id)editorNew();if(type==='profiles'&&editingProfileId===id)editingProfileId=null;notify('Elemento eliminado.')}catch(e){notify(e.message)}
  }
 });
-$('#start-create').addEventListener('click',()=>{editorNew();showEditor()});
+$('#start-create').addEventListener('click',()=>{editorNew();location.hash='preparacion';go('preparacion')});
 $('#projects-create').addEventListener('click',()=>{editorNew();showEditor()});
 $('#profiles-create').addEventListener('click',()=>{editorNew();showEditor();$('#project-name').focus();notify('Completá las medidas y elegí «Guardar estas medidas».')});
 form.addEventListener('submit',event=>{event.preventDefault();generatePattern()});
@@ -126,4 +129,14 @@ $('#backup-import').addEventListener('change',async event=>{
   persist(incoming);editorNew();notify('Respaldo importado correctamente.');
  }catch(e){notify('No se pudo importar el respaldo: '+e.message)}
 });
+const themeKey='mi-molde:tema';
+function applyTheme(mode){
+ const dark=mode==='dark';
+ document.documentElement.dataset.theme=dark?'dark':'light';
+ $('#theme-toggle').innerHTML=dark?'☀ <span>Light</span>':'☾ <span>Dark</span>';
+ try{localStorage.setItem(themeKey,dark?'dark':'light')}catch{}
+}
+$('#theme-toggle').addEventListener('click',()=>applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
+let initialTheme='light';try{initialTheme=localStorage.getItem(themeKey)||'light'}catch{}
+applyTheme(initialTheme);
 renderGuide();renderLists();route();
