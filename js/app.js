@@ -86,8 +86,8 @@ function saveCurrentProfile(){
 }
 function generatePattern(){
  error.textContent='';
- try{const m=validValues();model=generate(m);preview.innerHTML=draw(model);
-  summary.textContent=`Pinza lateral: ${model.d} cm · patas rectificadas: ${model.truedLeg.toFixed(2)} cm · diferencia lateral calculada: ${(model.difference*10).toFixed(1)} mm.`;
+ try{const m=validValues();model={m,illustrative:true};preview.innerHTML=draw(model);
+  summary.textContent='Vista ilustrativa inspirada en los apuntes de corpiño base 2 pinzas. No representa medidas reales ni sirve para cortar tela.';
   result.hidden=false;$('#preview-empty').hidden=true;
  }catch(e){error.textContent=e.message;resetPreview();error.textContent=e.message}
 }
@@ -158,7 +158,7 @@ $('#review-back').addEventListener('click',showEditor);
 $('#review-generate').addEventListener('click',()=>{
  generatePattern();
  if(!model){notify(error.textContent||'No se pudo generar el molde.');return}
- $('#generation-status').textContent='Molde generado con las medidas revisadas. Ya podés visualizar las piezas.';
+ $('#generation-status').textContent='Esquema ilustrativo preparado. Ya podés visualizar las piezas basadas en los apuntes.';
  navigateFlow('generacion');
 });
 $('#generation-back').addEventListener('click',()=>{renderReview();navigateFlow('revision')});
