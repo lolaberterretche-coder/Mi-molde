@@ -1,6 +1,7 @@
 import {definitions,generate} from './engine.js';
 import {draw,printTiles} from './render.js';
 import {measurementHelp,validateMeasurements} from './measurements.js';
+import {guideStep,completedCount,measurementGuide} from './guide.js';
 import {defaultMeasures,loadWorkspace,saveWorkspace,saveProfile,saveProject,deleteItem,exportBackup,importBackup,normalizeMeasures} from './storage.js';
 
 const $=selector=>document.querySelector(selector);
@@ -8,14 +9,42 @@ const fields=$('#fields'),form=$('#measurements'),error=$('#error'),result=$('#r
 const preview=$('#preview'),summary=$('#summary'),profileSelect=$('#profile-select');
 const escapeHtml=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const formatDate=value=>{const date=new Date(value);return Number.isNaN(date.getTime())?'Fecha desconocida':date.toLocaleDateString('es-AR',{day:'2-digit',month:'short',year:'numeric'})};
-let workspace,model=null,editingProjectId=null,editingProfileId=null;
+let workspace,model=null,editingProjectId=null,editingProfileId=null,guideIndex=0;
 try{workspace=loadWorkspace()}catch(e){workspace={version:1,profiles:[],projects:[],selectedProfileId:null};queueMicrotask(()=>notify(e.message))}
 fields.innerHTML=definitions.map(([key,label,initial])=>`<div class="measurement"><label class="field" for="${key}">${label} <span class="unit">cm</span><input id="${key}" name="${key}" type="number" min="1" step=".1" value="${initial}" required inputmode="decimal" aria-describedby="help-${key}"></label><p class="help" id="help-${key}">${measurementHelp[key]}</p></div>`).join('');
 
+function renderGuide(){
+ const step=guideStep(guideIndex),count=completedCount(Object.fromEntries(definitions.map(([key])=>[key,form.elements[key].value])));
+ $('#guide-counter').textContent=`${count} de 9 medidas completadas`;
+ $('#guide-step-label').textContent=`MEDIDA ${String(guideIndex+1).padStart(2,'0')} / 09`;
+ $('#guide-title').textContent=step.title;
+ $('#guide-instruction').textContent=step.instruction;
+ $('#guide-tip').textContent=step.tip;
+ $('#guide-progress').setAttribute('aria-valuenow',String(count));
+ $('#guide-progress-fill').style.width=`${count/measurementGuide.length*100}%`;
+ $('#guide-prev').disabled=guideIndex===0;
+ $('#guide-next').disabled=guideIndex===measurementGuide.length-1;
+ for(const [i,entry] of measurementGuide.entries()){
+  const el=form.elements[entry.key]?.closest('.measurement');
+  if(el)el.classList.toggle('selected-measurement',i===guideIndex);
+ }
+}
+function selectGuide(index,{focus=false}={}){
+ guideIndex=Math.max(0,Math.min(measurementGuide.length-1,index));
+ renderGuide();
+ if(focus)form.elements[guideStep(guideIndex).key].focus();
+}
+$('#guide-prev').addEventListener('click',()=>selectGuide(guideIndex-1,{focus:true}));
+$('#guide-next').addEventListener('click',()=>selectGuide(guideIndex+1,{focus:true}));
+fields.addEventListener('focusin',event=>{
+ const index=measurementGuide.findIndex(step=>step.key===event.target.name);
+ if(index>=0&&index!==guideIndex)selectGuide(index);
+});
+form.addEventListener('input',renderGuide);
 function notify(message){const el=$('#toast');el.textContent=message;el.hidden=false}
 function persist(next){workspace=saveWorkspace(next);renderLists()}
 function values(){return Object.fromEntries(definitions.map(([key])=>[key,Number(form.elements[key].value)]))}
-function setValues(m){for(const [key] of definitions)form.elements[key].value=m[key]}
+function setValues(m){for(const [key] of definitions)form.elements[key].value=m[key];renderGuide()}
 function validValues(){const m=values(),errors=validateMeasurements(m);if(errors.length)throw Error(errors.join(' '));return normalizeMeasures(m)}
 function resetPreview(){model=null;result.hidden=true;$('#preview-empty').hidden=false;error.textContent=''}
 function editorNew(){editingProjectId=null;editingProfileId=null;$('#project-name').value='Mi corpiño base';setValues(defaultMeasures());profileSelect.value='';$('#editor-heading').textContent='Crear corpiño base';resetPreview()}
@@ -97,4 +126,4 @@ $('#backup-import').addEventListener('change',async event=>{
   persist(incoming);editorNew();notify('Respaldo importado correctamente.');
  }catch(e){notify('No se pudo importar el respaldo: '+e.message)}
 });
-renderLists();route();
+renderGuide();renderLists();route();
