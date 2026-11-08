@@ -87,3 +87,59 @@
 }
 @media(max-width:580px){.figma-home .home-copy h1::before{display:none}.figma-home .home-copy h1::after{width:180px;height:19px}}
 @media(prefers-reduced-motion:reduce){.figma-home .home-copy h1::after,.home-steps article::after{transform:none}}
+
+/* Navegación de Mi Molde: botones con forma de cinta métrica enrollada.
+   Texto real y accesible, sin imágenes rasterizadas ni cambios funcionales. */
+:is(#start-create,#guide-prev,#guide-next,#go-review,#review-back,#review-generate,#generation-back,#generation-view,#visual-back,#visual-export,#export-back,#export-action,[data-action="begin-flow"],[data-action="go-home"],[data-action="go-measurements"]){
+ --ribbon:#e8c8f0;--ribbon-border:#72428f;--ribbon-text:#51296e;
+ position:relative;isolation:isolate;
+ display:inline-flex;align-items:center;justify-content:center;
+ min-height:55px;min-width:150px;max-width:100%;
+ padding:16px 26px!important;margin:8px 10px 8px 5px;
+ border:2px solid var(--ribbon-border)!important;
+ border-radius:24px 18px 22px 18px!important;
+ color:var(--ribbon-text)!important;
+ font-size:.93rem!important;font-weight:800!important;
+ text-align:center;line-height:1.25;
+ background:
+   repeating-linear-gradient(90deg,var(--ribbon-border) 0 1.4px,transparent 1.4px 13px) left 5px / 100% 9px no-repeat,
+   repeating-linear-gradient(90deg,var(--ribbon-border) 0 1.4px,transparent 1.4px 13px) left bottom 5px / 100% 9px no-repeat,
+   linear-gradient(160deg,#f6e6fa 0%,var(--ribbon) 54%,#d4a8e3 100%)!important;
+ box-shadow:3px 5px 0 #70449b21,0 5px 12px #4d286c15;
+ transform:rotate(-1deg);transition:transform .15s,box-shadow .15s,filter .15s;
+}
+:is(#start-create,#guide-prev,#guide-next,#go-review,#review-back,#review-generate,#generation-back,#generation-view,#visual-back,#visual-export,#export-back,#export-action,[data-action="begin-flow"],[data-action="go-home"],[data-action="go-measurements"])::after{
+ content:"";position:absolute;z-index:-1;right:-11px;top:-10px;
+ width:40px;height:18px;border:2px solid var(--ribbon-border);
+ border-radius:50%;background:linear-gradient(#d4a8e3,#b783d1);
+ transform:rotate(-16deg);pointer-events:none;
+}
+:is(#guide-prev,#review-back,#generation-back,#visual-back,#export-back,[data-action="go-home"])::after{
+ right:auto;left:-11px;transform:rotate(16deg);
+}
+:is(#start-create,#guide-prev,#guide-next,#go-review,#review-back,#review-generate,#generation-back,#generation-view,#visual-back,#visual-export,#export-back,#export-action,[data-action="begin-flow"],[data-action="go-home"],[data-action="go-measurements"]):hover:not(:disabled){
+ background:
+ repeating-linear-gradient(90deg,var(--ribbon-border) 0 1.4px,transparent 1.4px 13px) left 5px / 100% 9px no-repeat,
+ repeating-linear-gradient(90deg,var(--ribbon-border) 0 1.4px,transparent 1.4px 13px) left bottom 5px / 100% 9px no-repeat,
+ linear-gradient(160deg,#fff1ff,#e2b9ef 60%,#cda0df)!important;
+ transform:rotate(0deg) translateY(-2px);box-shadow:3px 7px 0 #70449b20;
+}
+:root[data-theme="dark"] :is(#start-create,#guide-prev,#guide-next,#go-review,#review-back,#review-generate,#generation-back,#generation-view,#visual-back,#visual-export,#export-back,#export-action,[data-action="begin-flow"],[data-action="go-home"],[data-action="go-measurements"]){
+ --ribbon:#9b6db6;--ribbon-border:#dfb6f0;--ribbon-text:#fff7ff;
+ background:
+ repeating-linear-gradient(90deg,var(--ribbon-border) 0 1.4px,transparent 1.4px 13px) left 5px / 100% 9px no-repeat,
+ repeating-linear-gradient(90deg,var(--ribbon-border) 0 1.4px,transparent 1.4px 13px) left bottom 5px / 100% 9px no-repeat,
+ linear-gradient(160deg,#ad82c4,#8653a4 70%,#694180)!important;
+}
+:root[data-theme="dark"] :is(#start-create,#guide-prev,#guide-next,#go-review,#review-back,#review-generate,#generation-back,#generation-view,#visual-back,#visual-export,#export-back,#export-action,[data-action="begin-flow"],[data-action="go-home"],[data-action="go-measurements"]):hover:not(:disabled){
+ background:
+ repeating-linear-gradient(90deg,var(--ribbon-border) 0 1.4px,transparent 1.4px 13px) left 5px / 100% 9px no-repeat,
+ repeating-linear-gradient(90deg,var(--ribbon-border) 0 1.4px,transparent 1.4px 13px) left bottom 5px / 100% 9px no-repeat,
+ linear-gradient(160deg,#b990ce,#9765b4 70%,#74488f)!important;
+}
+@media(max-width:580px){
+ :is(#start-create,#guide-prev,#guide-next,#go-review,#review-back,#review-generate,#generation-back,#generation-view,#visual-back,#visual-export,#export-back,#export-action,[data-action="begin-flow"],[data-action="go-home"],[data-action="go-measurements"]){min-width:115px;min-height:50px;padding:14px 16px!important;font-size:.82rem!important}
+}
+@media(prefers-reduced-motion:reduce){
+ :is(#start-create,#guide-prev,#guide-next,#go-review,#review-back,#review-generate,#generation-back,#generation-view,#visual-back,#visual-export,#export-back,#export-action,[data-action="begin-flow"],[data-action="go-home"],[data-action="go-measurements"]){transition:none;transform:none}
+}
