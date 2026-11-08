@@ -34,3 +34,6 @@
 .top-logo{display:flex;align-items:center;line-height:1}.top-logo img{display:block;width:185px;height:88px;object-fit:contain}.top-logo .logo-dark{display:none}:root[data-theme="dark"] .top-logo .logo-light{display:none}:root[data-theme="dark"] .top-logo .logo-dark{display:block}
 .guide-visual{overflow:hidden;padding:0!important;display:flex;align-items:center;justify-content:center;min-height:245px}.guide-visual img{display:block;width:100%;height:auto;max-height:330px;object-fit:contain;border-radius:12px}
 @media(max-width:580px){.top-logo img{width:120px;height:58px}.guide-visual{min-height:160px}}
+
+/* Portada: misma lámina ilustrativa que la pantalla de visualización */
+.home-art{overflow:hidden;min-width:0}.home-art .art-inner{min-width:0;padding:20px 16px 16px}.home-pattern{width:100%;min-width:0}.home-pattern svg{display:block;width:100%;height:auto;max-height:430px;object-fit:contain}.home-pattern .piece{fill:#f5eafb}.home-art .art-inner small{margin-top:8px}:root[data-theme="dark"] .home-pattern .piece{fill:#49325b}
