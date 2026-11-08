@@ -3,6 +3,7 @@ import {measurementHelp} from './measurements.js';
 
 export const measurementGuide=definitions.map(([key,label],index)=>({
  key,label,index,
+ image:'/assets/medidas/'+({bust:'busto',waist:'cintura',hip:'cadera',backLength:'espalda',backWidth:'ancho-espalda',shoulder:'hombros',neck:'cuello',bustHeight:'altura-busto',bustSpacing:'separacion-busto'}[key])+'.jpg',
  title:label,
  instruction:measurementHelp[key],
  tip:{
