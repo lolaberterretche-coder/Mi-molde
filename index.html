@@ -10,7 +10,7 @@
 <body>
 <a class="skip" href="#main">Ir al contenido</a>
 <div class="shell">
-<aside class="sidebar" aria-label="Navegación principal">
+<aside class="sidebar" aria-label="Navegación secundaria">
  <a class="brand" href="#inicio" aria-label="Mi Molde, inicio"><span aria-hidden="true">✂</span> Mi Molde <span aria-hidden="true">💜</span></a>
  <p class="sidebar-caption">Tu espacio de moldería</p>
  <nav class="nav">
@@ -22,13 +22,16 @@
  <div class="sidebar-note"><strong>Guardado en tu dispositivo</strong><p>Los proyectos y las medidas quedan en este navegador. Exportá un respaldo para no perderlos.</p><button id="backup-export" class="text-button" type="button">Descargar respaldo</button><label for="backup-import" class="text-button upload">Importar respaldo</label><input id="backup-import" type="file" accept=".json,application/json"></div>
 </aside>
 <div class="main-area">
-<header class="topbar"><span>Mi Molde / <span id="breadcrumb">Inicio</span></span><span class="privacy"><span aria-hidden="true">●</span> Sin cuenta · datos locales</span></header>
+<header class="topbar"><a href="#inicio" class="top-logo" aria-label="Mi Molde · Inicio"><span class="logo-symbol">✂</span><span>Mi Molde</span></a><nav class="top-links" aria-label="Navegación principal"><a href="#inicio" data-route="inicio">Inicio</a><a href="#como-funciona" data-route="como-funciona">Cómo funciona</a><a href="#medidas" data-route="medidas">Mis medidas</a><a href="#ayuda" data-route="ayuda">Ayuda</a></nav><button type="button" id="theme-toggle" class="theme-toggle secondary" aria-label="Cambiar entre modo claro y oscuro">☾ <span>Dark</span></button><span id="breadcrumb" class="sr-only">Inicio</span></header>
 <main id="main" tabindex="-1">
-<section id="view-inicio" class="view">
- <div class="hero"><span class="eyebrow">BIENVENIDA A TU ESPACIO</span><h1>Tu próxima creación empieza acá.</h1><p>Organizá tus medidas, diseñá moldes personalizados y preparalos para imprimir desde un solo lugar.</p><button id="start-create" type="button">Crear nuevo molde</button></div>
- <div class="stats"><article><span>Proyectos guardados</span><strong id="count-projects">0</strong></article><article><span>Perfiles de medidas</span><strong id="count-profiles">0</strong></article><article><span>Tipo de molde</span><strong>Corpiño base</strong></article></div>
- <div class="section-heading"><h2>Proyectos recientes</h2><a href="#proyectos">Ver todos</a></div><div id="recent-projects" class="cards"></div>
+<section id="view-inicio" class="view figma-home">
+ <div class="home-hero"><div class="home-copy"><span class="home-tag">MOLDERÍA A TU MEDIDA</span><h1>Creá tu molde base <span>con tus propias medidas.</span></h1><p>Una forma clara y guiada de tomar tus medidas, generar el corpiño base y preparar tu molde para imprimir.</p><button id="start-create" type="button">Comenzar <span aria-hidden="true">→</span></button></div><div class="home-art" aria-label="Ilustración de delantero y espalda de un molde de corpiño"><div class="art-inner"><div class="art-pieces"><div><strong>DELANTERO</strong><svg viewBox="0 0 150 265" role="img" aria-label="Delantero ilustrativo"><path d="M38 7 L91 7 Q105 39 141 47 Q117 80 124 114 L143 260 L5 260 L22 115 Q40 78 25 45 Q40 29 38 7Z" fill="#d9b8e7" stroke="#6e398b" stroke-width="3"/><path d="M74 260 L74 165 L56 212 M74 165 L91 212" fill="none" stroke="#76439a" stroke-width="2"/></svg></div><div><strong>ESPALDA</strong><svg viewBox="0 0 150 265" role="img" aria-label="Espalda ilustrativa"><path d="M37 7 L91 7 Q104 39 139 47 Q119 84 127 118 L143 260 L6 260 L24 118 Q38 82 25 47 Q39 32 37 7Z" fill="#a878be" stroke="#6e398b" stroke-width="3"/><path d="M74 260 L74 183 L56 226 M74 183 L92 226" fill="none" stroke="#6e398b" stroke-width="2"/></svg></div></div><small>Visualización ilustrativa · no es un patrón a escala</small></div></div></div>
+ <div class="home-steps"><article><span>01</span><strong>Prepará tus materiales</strong></article><article><span>02</span><strong>Ingresá tus medidas</strong></article><article><span>03</span><strong>Visualizá y exportá</strong></article></div>
+ <div class="home-workspace"><div class="section-heading"><h2>Tus proyectos recientes</h2><a href="#proyectos">Ver todos</a></div><div id="recent-projects" class="cards"></div><div hidden><span id="count-projects"></span><span id="count-profiles"></span></div></div>
 </section>
+<section id="view-como-funciona" class="view" hidden><div class="figma-page"><span class="home-tag">CONOCÉ MI MOLDE</span><h1>La moldería, paso a paso.</h1><div class="figma-two-col"><div><h2>¿Para quién es Mi Molde?</h2><p>Para personas que están empezando a aprender costura y moldería, y quieren crear un molde base adaptado a sus propias medidas.</p><div class="panel"><h3>No necesitás experiencia previa</h3><p>Te acompañamos con instrucciones sencillas para medir, revisar tus datos y preparar el molde para exportarlo.</p></div></div><div class="panel"><h2>Así funciona</h2><ol class="figma-steps"><li>Prepará cinta métrica y materiales</li><li>Ingresá tus medidas con ayuda visual</li><li>Revisá los valores antes de generar</li><li>Visualizá y exportá tu molde base</li></ol></div></div><button type="button" data-action="begin-flow">Comenzar →</button></div></section>
+<section id="view-preparacion" class="view" hidden><div class="figma-page"><span class="eyebrow">PASO 1 DE 7 · PREPARACIÓN</span><h1>Antes de tomar tus medidas</h1><p>Prepará estos materiales y seguí las recomendaciones para medir mejor.</p><div class="figma-two-col"><div class="panel"><h2>Lo que vas a necesitar</h2><div class="prep-item"><span>↔</span><div><strong>Cinta métrica flexible</strong><p>Es indispensable para medir el cuerpo.</p></div></div><div class="prep-item"><span>✓</span><div><strong>Otra persona que pueda ayudarte</strong><p>Recomendado para mayor precisión.</p></div></div></div><div class="panel"><h2>Consejos para medir</h2><ul class="prep-tips"><li>Usá ropa ajustada al cuerpo.</li><li>Mantené una postura natural y relajada.</li><li>No aprietes demasiado la cinta métrica.</li><li>Evitá moverte durante cada medición.</li></ul></div></div><div class="flow-actions"><button type="button" class="secondary" data-action="go-home">← Volver</button><button type="button" data-action="go-measurements">Continuar →</button></div></div></section>
+<section id="view-ayuda" class="view" hidden><div class="figma-page"><span class="home-tag">AYUDA</span><h1>Estamos para acompañarte</h1><div class="panel"><h2>¿Cómo funciona Mi Molde?</h2><p>Comenzá por preparar tus materiales, completá las nueve medidas y revisá los valores antes de generar tu corpiño base.</p><p>Tus proyectos se guardan en este navegador. Descargá un respaldo desde el menú de proyectos para conservarlos.</p><p>Antes de cortar tela, verificá el molde impreso y su escala con una regla.</p></div></div></section>
 <section id="view-proyectos" class="view" hidden>
  <div class="section-heading"><div><span class="eyebrow">TU TALLER</span><h1>Mis proyectos</h1><p>Retomá y editá tus moldes cuando quieras.</p></div><button id="projects-create" type="button">Nuevo molde</button></div>
  <div id="projects-list" class="cards"></div>
@@ -54,7 +57,7 @@
        <span id="guide-step-label" class="eyebrow">MEDIDA 01 / 09</span>
        <h3 id="guide-title">Contorno de busto</h3>
        <p id="guide-instruction"></p>
-       <div class="guide-visual" id="guide-visual"><span aria-hidden="true">✂</span><p>Ilustración de esta medida pendiente de incorporar desde el material de clase.</p></div>
+       <div class="guide-visual" id="guide-visual"><span aria-hidden="true">✂</span><p>Guía visual de la medida</p></div>
        <p class="guide-tip" id="guide-tip"></p>
        <div class="guide-controls"><button type="button" class="secondary" id="guide-prev">← Anterior</button><button type="button" id="guide-next">Siguiente →</button></div>
       </article>
